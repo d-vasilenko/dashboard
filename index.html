@@ -1,0 +1,282 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Employee & Project Dashboard</title>
+</head>
+<body>
+  <aside class="sidebar" id="sidebar">
+    <button class="sidebar-toggle" id="sidebarToggle" title="Collapse sidebar">☰</button>
+    <div class="sidebar-content">
+      <div class="period-section">
+        <label class="sidebar-label">Period</label>
+        <div class="period-selectors">
+          <select id="monthSelect" class="select-input">
+            <option value="0">January</option>
+            <option value="1">February</option>
+            <option value="2">March</option>
+            <option value="3">April</option>
+            <option value="4">May</option>
+            <option value="5">June</option>
+            <option value="6">July</option>
+            <option value="7">August</option>
+            <option value="8">September</option>
+            <option value="9">October</option>
+            <option value="10">November</option>
+            <option value="11">December</option>
+          </select>
+          <select id="yearSelect" class="select-input">
+            <option value="2025">2025</option>
+            <option value="2026" selected>2026</option>
+            <option value="2027">2027</option>
+          </select>
+        </div>
+      </div>
+      <button class="btn btn-secondary btn-seed" id="seedDataBtn">📋 Seed Data</button>
+      <nav class="sidebar-nav">
+        <button class="nav-tab active" data-tab="projects" id="tabProjects">📁 Projects</button>
+        <button class="nav-tab" data-tab="employees" id="tabEmployees">👥 Employees</button>
+      </nav>
+    </div>
+  </aside>
+
+  <button class="sidebar-open-btn hidden" id="sidebarOpenBtn" title="Open sidebar">→</button>
+
+  <main class="main-content" id="mainContent">
+
+    <section class="tab-section" id="projectsSection">
+      <div class="section-header">
+        <h2>Projects</h2>
+        <button class="btn btn-primary" id="addProjectBtn">+ Add Project</button>
+      </div>
+      <div class="filter-chips" id="projectFilterChips"></div>
+      <div class="table-wrapper">
+        <table class="data-table" id="projectsTable">
+          <thead>
+            <tr>
+              <th data-col="companyName" data-sortable data-filterable>Company <span class="sort-icon">⇅</span><button class="filter-btn" title="Filter">⌕</button></th>
+              <th data-col="projectName" data-sortable data-filterable>Project <span class="sort-icon">⇅</span><button class="filter-btn" title="Filter">⌕</button></th>
+              <th data-col="budget" data-sortable>Budget <span class="sort-icon">⇅</span></th>
+              <th data-col="capacity" data-sortable>Capacity <span class="sort-icon">⇅</span></th>
+              <th>Employees</th>
+              <th data-col="income" data-sortable>Est. Income <span class="sort-icon">⇅</span></th>
+              <th>Actions</th>
+            </tr>
+          </thead>
+          <tbody id="projectsTableBody"></tbody>
+        </table>
+      </div>
+      <div class="total-income-row" id="totalIncomeRow">
+        <span>Total Estimated Income:</span>
+        <span class="total-income-value" id="totalIncomeValue">$0.00</span>
+      </div>
+    </section>
+
+    <section class="tab-section hidden" id="employeesSection">
+      <div class="section-header">
+        <h2>Employees</h2>
+        <button class="btn btn-primary" id="addEmployeeBtn">+ Add Employee</button>
+      </div>
+      <div class="filter-chips" id="employeeFilterChips"></div>
+      <div class="table-wrapper">
+        <table class="data-table" id="employeesTable">
+          <thead>
+            <tr>
+              <th data-col="name" data-sortable data-filterable>Name <span class="sort-icon">⇅</span><button class="filter-btn" title="Filter">⌕</button></th>
+              <th data-col="surname" data-sortable data-filterable>Surname <span class="sort-icon">⇅</span><button class="filter-btn" title="Filter">⌕</button></th>
+              <th data-col="age" data-sortable>Age <span class="sort-icon">⇅</span></th>
+              <th data-col="position" data-sortable data-filterable data-filter-type="dropdown">Position <span class="sort-icon">⇅</span><button class="filter-btn" title="Filter">⌕</button></th>
+              <th data-col="salary" data-sortable>Salary <span class="sort-icon">⇅</span></th>
+              <th data-col="payment" data-sortable>Est. Payment <span class="sort-icon">⇅</span></th>
+              <th>Projects</th>
+              <th data-col="projectedIncome" data-sortable>Projected Income <span class="sort-icon">⇅</span></th>
+              <th>Actions</th>
+            </tr>
+          </thead>
+          <tbody id="employeesTableBody"></tbody>
+        </table>
+      </div>
+    </section>
+
+  </main>
+
+  <!-- SLIDE-IN PANELS -->
+  <div class="slide-panel" id="addProjectPanel">
+    <div class="slide-panel-header">
+      <h3>Add New Project</h3>
+      <button class="close-btn" data-close="addProjectPanel">×</button>
+    </div>
+    <form class="panel-form" id="addProjectForm" novalidate>
+      <div class="form-group">
+        <label for="proj_projectName">Project Name *</label>
+        <input type="text" id="proj_projectName" placeholder="Min 3 chars, alphanumeric" />
+        <span class="field-error" id="err_proj_projectName"></span>
+      </div>
+      <div class="form-group">
+        <label for="proj_companyName">Company Name *</label>
+        <input type="text" id="proj_companyName" placeholder="Min 2 chars, alphanumeric" />
+        <span class="field-error" id="err_proj_companyName"></span>
+      </div>
+      <div class="form-group">
+        <label for="proj_budget">Budget ($) *</label>
+        <input type="number" id="proj_budget" placeholder="Positive number" min="0.01" step="0.01" />
+        <span class="field-error" id="err_proj_budget"></span>
+      </div>
+      <div class="form-group">
+        <label for="proj_capacity">Employee Capacity *</label>
+        <input type="number" id="proj_capacity" placeholder="Integer, min 1" min="1" step="1" />
+        <span class="field-error" id="err_proj_capacity"></span>
+      </div>
+      <button type="submit" class="btn btn-primary btn-full" id="addProjectSubmit" disabled>Create Project</button>
+    </form>
+  </div>
+
+  <div class="slide-panel" id="addEmployeePanel">
+    <div class="slide-panel-header">
+      <h3>Add New Employee</h3>
+      <button class="close-btn" data-close="addEmployeePanel">×</button>
+    </div>
+    <form class="panel-form" id="addEmployeeForm" novalidate>
+      <div class="form-group">
+        <label for="emp_name">Name *</label>
+        <input type="text" id="emp_name" placeholder="Min 3 letters" />
+        <span class="field-error" id="err_emp_name"></span>
+      </div>
+      <div class="form-group">
+        <label for="emp_surname">Surname *</label>
+        <input type="text" id="emp_surname" placeholder="Min 3 letters" />
+        <span class="field-error" id="err_emp_surname"></span>
+      </div>
+      <div class="form-group">
+        <label for="emp_dob">Date of Birth *</label>
+        <input type="date" id="emp_dob" />
+        <span class="field-error" id="err_emp_dob"></span>
+      </div>
+      <div class="form-group">
+        <label for="emp_position">Position *</label>
+        <select id="emp_position">
+          <option value="">— Select position —</option>
+          <option value="Junior">Junior</option>
+          <option value="Middle">Middle</option>
+          <option value="Senior">Senior</option>
+          <option value="Lead">Lead</option>
+          <option value="Architect">Architect</option>
+          <option value="BO">BO</option>
+        </select>
+        <span class="field-error" id="err_emp_position"></span>
+      </div>
+      <div class="form-group">
+        <label for="emp_salary">Salary ($) *</label>
+        <input type="number" id="emp_salary" placeholder="Positive number" min="0.01" step="0.01" />
+        <span class="field-error" id="err_emp_salary"></span>
+      </div>
+      <button type="submit" class="btn btn-primary btn-full" id="addEmployeeSubmit" disabled>Create Employee</button>
+    </form>
+  </div>
+
+  <div class="panel-backdrop hidden" id="panelBackdrop"></div>
+
+  <!-- MODALS -->
+  <div class="modal-backdrop hidden" id="modalBackdrop"></div>
+
+  <div class="modal hidden" id="projectEmployeesModal">
+    <div class="modal-header">
+      <h3 id="projectEmployeesTitle">Project Employees</h3>
+      <button class="close-btn" data-close-modal="projectEmployeesModal">×</button>
+    </div>
+    <div class="modal-body" id="projectEmployeesBody"></div>
+  </div>
+
+  <div class="modal hidden" id="employeeAssignmentsModal">
+    <div class="modal-header">
+      <h3 id="employeeAssignmentsTitle">Employee Assignments</h3>
+      <button class="close-btn" data-close-modal="employeeAssignmentsModal">×</button>
+    </div>
+    <div class="modal-body" id="employeeAssignmentsBody"></div>
+  </div>
+
+  <div class="assign-popup hidden" id="assignPopup">
+    <div class="assign-popup-header">
+      <h4>Assign to Project</h4>
+      <button class="close-btn" id="assignPopupClose">×</button>
+    </div>
+    <div id="assignPopupBody"></div>
+  </div>
+
+  <div class="modal hidden" id="editAssignmentModal">
+    <div class="modal-header">
+      <h3>Edit Assignment</h3>
+      <button class="close-btn" data-close-modal="editAssignmentModal">×</button>
+    </div>
+    <div class="modal-body" id="editAssignmentBody"></div>
+  </div>
+
+  <div class="modal hidden" id="unassignModal">
+    <div class="modal-header">
+      <h3>Confirm Unassign</h3>
+      <button class="close-btn" data-close-modal="unassignModal">×</button>
+    </div>
+    <div class="modal-body" id="unassignBody"></div>
+    <div class="modal-footer">
+      <button class="btn btn-secondary" data-close-modal="unassignModal">Cancel</button>
+      <button class="btn btn-danger" id="unassignConfirmBtn">Unassign</button>
+    </div>
+  </div>
+
+  <div class="modal hidden" id="deleteModal">
+    <div class="modal-header">
+      <h3>Confirm Delete</h3>
+      <button class="close-btn" data-close-modal="deleteModal">×</button>
+    </div>
+    <div class="modal-body"><p id="deleteModalMessage"></p></div>
+    <div class="modal-footer">
+      <button class="btn btn-secondary" data-close-modal="deleteModal">Cancel</button>
+      <button class="btn btn-danger" id="deleteConfirmBtn">Delete</button>
+    </div>
+  </div>
+
+  <div class="modal hidden" id="seedModal">
+    <div class="modal-header">
+      <h3>Seed Data from Another Month</h3>
+      <button class="close-btn" data-close-modal="seedModal">×</button>
+    </div>
+    <div class="modal-body" id="seedModalBody"></div>
+  </div>
+
+  <div class="modal hidden" id="calendarModal">
+    <div class="modal-header">
+      <h3 id="calendarTitle">Availability</h3>
+      <button class="close-btn" data-close-modal="calendarModal">×</button>
+    </div>
+    <div class="modal-body" id="calendarBody"></div>
+    <div class="modal-footer">
+      <div class="working-days-info" id="workingDaysInfo"></div>
+      <div class="vacation-display" id="vacationDisplay"></div>
+      <button class="btn btn-primary" id="setVacationBtn">Set Vacation</button>
+    </div>
+  </div>
+
+  <div class="filter-popup hidden" id="filterPopup">
+    <input type="text" class="filter-input" id="filterInput" placeholder="Filter..." />
+    <select class="filter-select hidden" id="filterSelect">
+      <option value="">— All positions —</option>
+      <option value="Junior">Junior</option>
+      <option value="Middle">Middle</option>
+      <option value="Senior">Senior</option>
+      <option value="Lead">Lead</option>
+      <option value="Architect">Architect</option>
+      <option value="BO">BO</option>
+    </select>
+    <div class="filter-popup-buttons">
+      <button class="btn btn-secondary btn-sm" id="filterCancelBtn">Cancel</button>
+      <button class="btn btn-primary btn-sm" id="filterApplyBtn">Apply</button>
+    </div>
+  </div>
+
+  <div class="action-menu hidden" id="actionMenu">
+    <button class="action-menu-item" id="actionSeeAt">👁 See at …</button>
+    <button class="action-menu-item" id="actionUnassign">✂ Unassign</button>
+  </div>
+</body>
+</html>
