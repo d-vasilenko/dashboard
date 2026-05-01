@@ -8,9 +8,10 @@
 // layout
 @use "./layout/layout";
 
-// compontnts
-@use "./compontnts/buttons";
-@use "./compontnts/tables";
-@use "./compontnts/filter-chips";
-@use "./compontnts/slide-panels";
-@use "./compontnts/forms";
+// components
+@use "./components/buttons";
+@use "./components/tables";
+@use "./components/filter-chips";
+@use "./components/slide-panels";
+@use "./components/forms";
+@use "./components/modal";
