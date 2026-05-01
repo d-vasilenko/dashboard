@@ -1,0 +1,47 @@
+@use "../abstract/constants";
+
+/* ═══════════════════════════════════════════════════════
+   ФОРМЫ
+═══════════════════════════════════════════════════════ */
+
+.form-group {
+  display: flex;
+  flex-direction: column;
+  gap: 6px;
+}
+
+.form-group label {
+  font-size: 13px;
+  font-weight: 500;
+  color: var(--color-text);
+}
+
+.form-group input,
+.form-group select {
+  padding: 9px 12px;
+  border: 1px solid var(--color-border);
+  border-radius: var(--border-radius);
+  font-size: 14px;
+  outline: none;
+  transition: border-color 0.15s;
+  background: #fff;
+  color: var(--color-text);
+}
+
+.form-group input:focus,
+.form-group select:focus {
+  border-color: var(--color-primary);
+}
+
+/* Поле с ошибкой */
+.form-group input.invalid,
+.form-group select.invalid {
+  border-color: var(--color-danger);
+}
+
+/* Текст ошибки под полем */
+.field-error {
+  font-size: 12px;
+  color: var(--color-danger);
+  min-height: 16px; /* Высота резервируется всегда */
+}
