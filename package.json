@@ -1,0 +1,20 @@
+{
+  "name": "dashbord",
+  "version": "1.0.0",
+  "description": "",
+  "main": "app.js",
+  "scripts": {
+    "style": "sass --watch sass/style.scss sass/style.css",
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/d-vasilenko/dashboard.git"
+  },
+  "author": "Denis Vasilenko",
+  "license": "MIT",
+  "bugs": {
+    "url": "https://github.com/d-vasilenko/dashboard/issues"
+  },
+  "homepage": "https://github.com/d-vasilenko/dashboard#readme"
+}

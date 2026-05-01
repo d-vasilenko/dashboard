@@ -1,0 +1,184 @@
+@use "../abstract/constants";
+
+/* ═══════════════════════════════════════════════════════
+   LAYOUT — sidebar + main content рядом
+═══════════════════════════════════════════════════════ */;
+
+body {
+  display: flex;
+  min-height: 100vh;
+}
+
+/* ─── SIDEBAR ─── */
+
+.sidebar {
+  width: var(--sidebar-width);
+  min-width: var(--sidebar-width);
+  background: var(--color-sidebar);
+  color: var(--color-sidebar-text);
+  display: flex;
+  flex-direction: column;
+  padding: 0;
+  position: relative;
+  transition: width 0.25s ease, min-width 0.25s ease;
+  z-index: 10;
+}
+
+/* Кнопка свернуть/развернуть панель */
+.sidebar-toggle {
+  position: absolute;
+  top: 12px;
+  right: -16px;
+  width: 32px;
+  height: 32px;
+  border-radius: 50%;
+  border: 2px solid var(--color-border);
+  background: var(--color-surface);
+  color: var(--color-text);
+  cursor: pointer;
+  font-size: 14px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  z-index: 20;
+  box-shadow: var(--shadow-sm);
+  transition: background 0.15s;
+}
+.sidebar-toggle:hover { background: var(--color-primary); color: #fff; }
+
+/* Контент панели скрывается при сворачивании */
+.sidebar-content {
+  padding: 20px 16px;
+  display: flex;
+  flex-direction: column;
+  gap: 20px;
+  overflow: hidden;
+}
+
+/* Скрытое состояние боковой панели */
+.sidebar.collapsed {
+  width: 0;
+  min-width: 0;
+  overflow: hidden;
+}
+
+/* Кнопка открытия свёрнутой панели */
+.sidebar-open-btn {
+  position: fixed;
+  left: 0;
+  top: 12px;
+  width: 32px;
+  height: 32px;
+  border-radius: 0 50% 50% 0;
+  border: 2px solid var(--color-border);
+  border-left: none;
+  background: var(--color-surface);
+  color: var(--color-primary);
+  font-size: 14px;
+  cursor: pointer;
+  z-index: 30;
+  box-shadow: var(--shadow-sm);
+}
+.sidebar-open-btn:hover { background: var(--color-primary); color: #fff; }
+
+/* Метка над селектором */
+.sidebar-label {
+  font-size: 11px;
+  font-weight: 600;
+  letter-spacing: 0.8px;
+  text-transform: uppercase;
+  color: var(--color-text-light);
+  margin-bottom: 8px;
+  display: block;
+}
+
+/* Два селектора (месяц + год) рядом */
+.period-selectors {
+  display: flex;
+  flex-direction: column;
+  gap: 6px;
+}
+
+/* Общий стиль для select в сайдбаре */
+.select-input {
+  width: 100%;
+  padding: 7px 10px;
+  border-radius: var(--border-radius);
+  border: 1px solid rgba(255,255,255,0.1);
+  background: rgba(255,255,255,0.08);
+  color: #fff;
+  font-size: 13px;
+  cursor: pointer;
+  outline: none;
+  appearance: none;
+  -webkit-appearance: none;
+}
+.select-input:focus {
+  border-color: var(--color-primary);
+}
+.select-input option {
+  background: #2c3347;
+  color: #fff;
+}
+
+/* Кнопка Seed Data */
+.btn-seed {
+  width: 100%;
+  font-size: 13px;
+}
+
+/* Навигационные табы в сайдбаре */
+.sidebar-nav {
+  display: flex;
+  flex-direction: column;
+  gap: 4px;
+}
+
+.nav-tab {
+  width: 100%;
+  padding: 10px 12px;
+  text-align: left;
+  border: none;
+  border-radius: var(--border-radius);
+  background: transparent;
+  color: var(--color-sidebar-text);
+  font-size: 14px;
+  cursor: pointer;
+  transition: background 0.15s, color 0.15s;
+}
+.nav-tab:hover {
+  background: rgba(255,255,255,0.08);
+  color: #fff;
+}
+.nav-tab.active {
+  background: var(--color-primary);
+  color: #fff;
+}
+
+/* ─── MAIN CONTENT ─── */
+
+.main-content {
+  flex: 1;
+  padding: 24px;
+  overflow-y: auto;
+  min-width: 0; /* Позволяет flex-item сжиматься */
+}
+
+/* Заголовок секции + кнопка */
+.section-header {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  margin-bottom: 16px;
+}
+
+.section-header h2 {
+  font-size: 22px;
+  font-weight: 600;
+  color: var(--color-text);
+}
+
+/* Показываем/скрываем секции по табу */
+.tab-section.hidden {
+  display: none;
+}

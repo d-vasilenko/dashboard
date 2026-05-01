@@ -1,0 +1,33 @@
+:root {
+  /* Цветовая палитра */
+  --color-primary:      #4f6bed;
+  --color-primary-dark: #3a55d4;
+  --color-danger:       #e05252;
+  --color-danger-dark:  #c43e3e;
+  --color-success:      #2ecc71;
+  --color-warning:      #f39c12;
+
+  /* Нейтральные */
+  --color-bg:           #f0f2f7;
+  --color-surface:      #ffffff;
+  --color-sidebar:      #1e2435;
+  --color-sidebar-text: #a8b3cc;
+  --color-border:       #dde1ea;
+  --color-text:         #2c3347;
+  --color-text-muted:   #6b7590;
+  --color-text-light:   #9aa3b8;
+
+  /* Таблица */
+  --color-row-hover:    #f5f7ff;
+  --color-th-bg:        #f8f9fc;
+
+  /* Тени */
+  --shadow-sm:  0 1px 3px rgba(0,0,0,0.08);
+  --shadow-md:  0 4px 16px rgba(0,0,0,0.12);
+  --shadow-lg:  0 8px 32px rgba(0,0,0,0.16);
+
+  /* Размеры */
+  --sidebar-width: 220px;
+  --border-radius: 8px;
+  --border-radius-lg: 12px;
+}

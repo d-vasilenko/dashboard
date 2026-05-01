@@ -1,0 +1,49 @@
+@use "../abstract/constants"
+
+/* ═══════════════════════════════════════════════════════
+   КНОПКИ
+═══════════════════════════════════════════════════════ */;
+
+.btn {
+  display: inline-flex;
+  align-items: center;
+  gap: 6px;
+  padding: 8px 16px;
+  border: none;
+  border-radius: var(--border-radius);
+  font-size: 13px;
+  font-weight: 500;
+  cursor: pointer;
+  transition: background 0.15s, opacity 0.15s;
+  white-space: nowrap;
+}
+
+.btn:disabled {
+  opacity: 0.5;
+  cursor: not-allowed;
+}
+
+.btn-primary   { background: var(--color-primary);  color: #fff; }
+.btn-primary:hover:not(:disabled) { background: var(--color-primary-dark); }
+
+.btn-secondary { background: #eef0f7; color: var(--color-text); }
+.btn-secondary:hover:not(:disabled) { background: #dde0ed; }
+
+.btn-danger    { background: var(--color-danger); color: #fff; }
+.btn-danger:hover:not(:disabled) { background: var(--color-danger-dark); }
+
+.btn-sm  { padding: 5px 10px; font-size: 12px; }
+.btn-xs  { padding: 3px 8px;  font-size: 11px; }
+.btn-full { width: 100%; justify-content: center; }
+
+/* Ссылка-кнопка без фона */
+.btn-link {
+  background: none;
+  border: none;
+  color: var(--color-primary);
+  cursor: pointer;
+  font-size: 13px;
+  text-decoration: underline;
+  padding: 0;
+}
+.btn-link:hover { color: var(--color-primary-dark); }
