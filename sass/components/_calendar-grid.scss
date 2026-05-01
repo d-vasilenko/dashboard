@@ -1,0 +1,82 @@
+@use "../abstract/constants";
+
+/* ═══════════════════════════════════════════════════════
+   КАЛЕНДАРЬ ОТПУСКОВ
+═══════════════════════════════════════════════════════ */
+
+.calendar-grid {
+  display: grid;
+  grid-template-columns: repeat(7, 1fr);
+  gap: 4px;
+  margin-top: 12px;
+}
+
+/* Заголовки дней недели (Sun, Mon, ...) */
+.calendar-day-name {
+  text-align: center;
+  font-size: 11px;
+  font-weight: 600;
+  color: var(--color-text-muted);
+  padding: 4px;
+  text-transform: uppercase;
+}
+
+/* Ячейка дня */
+.calendar-day {
+  text-align: center;
+  padding: 6px 4px;
+  border-radius: 6px;
+  font-size: 13px;
+  cursor: pointer;
+  transition: background 0.15s;
+  user-select: none;
+}
+
+.calendar-day:hover:not(.other-month) {
+  background: #eef0f7;
+}
+
+/* Пустая ячейка (дни другого месяца) */
+.calendar-day.empty {
+  cursor: default;
+}
+
+/* Выходные */
+.calendar-day.weekend {
+  color: var(--color-text-muted);
+  background: #f8f9fc;
+}
+
+/* Сегодняшний день */
+.calendar-day.today {
+  background: #e8eeff;
+  color: var(--color-primary);
+  font-weight: 600;
+}
+
+/* День отпуска */
+.calendar-day.vacation {
+  background: var(--color-primary);
+  color: #fff;
+  font-weight: 600;
+}
+
+/* Выходной + отпуск */
+.calendar-day.weekend.vacation {
+  background: var(--color-primary-dark);
+  opacity: 0.7;
+}
+
+/* Информация о рабочих днях */
+.working-days-info {
+  font-size: 13px;
+  color: var(--color-text);
+  font-weight: 500;
+}
+
+/* Форматированные диапазоны отпуска */
+.vacation-display {
+  font-size: 12px;
+  color: var(--color-text-muted);
+  flex: 1;
+}
