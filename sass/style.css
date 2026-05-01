@@ -1021,4 +1021,70 @@ input[type=range] {
   color: var(--color-text-muted);
 }
 
+/* ═══════════════════════════════════════════════════════
+   УТИЛИТЫ
+═══════════════════════════════════════════════════════ */
+.hidden {
+  display: none !important;
+}
+
+/* Цвет текста */
+.text-success {
+  color: var(--color-success);
+}
+
+.text-danger {
+  color: var(--color-danger);
+}
+
+.text-muted {
+  color: var(--color-text-muted);
+}
+
+.text-primary {
+  color: var(--color-primary);
+}
+
+/* Жирный текст */
+.fw-600 {
+  font-weight: 600;
+}
+
+/* Горизонтальная линия */
+.divider {
+  border: none;
+  border-top: 1px solid var(--color-border);
+  margin: 12px 0;
+}
+
+/* Строка финансовой информации в попапе */
+.financial-row {
+  display: flex;
+  justify-content: space-between;
+  padding: 6px 0;
+  font-size: 13px;
+  border-bottom: 1px solid #f0f2f7;
+}
+
+.financial-row:last-child {
+  border-bottom: none;
+  font-weight: 600;
+  font-size: 14px;
+  padding-top: 10px;
+}
+
+/* Бейдж состояния (например, "Over capacity") */
+.badge {
+  display: inline-block;
+  padding: 2px 8px;
+  border-radius: 999px;
+  font-size: 11px;
+  font-weight: 600;
+}
+
+.badge-warning {
+  background: #fff3cd;
+  color: #856404;
+}
+
 /*# sourceMappingURL=style.css.map */
