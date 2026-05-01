@@ -312,4 +312,152 @@ body {
   color: var(--color-primary-dark);
 }
 
+/* ═══════════════════════════════════════════════════════
+   ТАБЛИЦЫ
+═══════════════════════════════════════════════════════ */
+.table-wrapper {
+  background: var(--color-surface);
+  border-radius: var(--border-radius-lg);
+  box-shadow: var(--shadow-sm);
+  overflow-x: auto; /* Горизонтальный скролл для узких экранов */
+  border: 1px solid var(--color-border);
+}
+
+.data-table {
+  width: 100%;
+  border-collapse: collapse;
+  font-size: 13px;
+}
+
+/* Заголовки колонок */
+.data-table th {
+  background: var(--color-th-bg);
+  padding: 10px 14px;
+  text-align: left;
+  font-weight: 600;
+  color: var(--color-text-muted);
+  font-size: 12px;
+  letter-spacing: 0.3px;
+  border-bottom: 1px solid var(--color-border);
+  white-space: nowrap;
+  user-select: none;
+  position: relative; /* Для позиционирования иконок */
+}
+
+/* Курсор для сортируемых колонок */
+.data-table th[data-sortable] {
+  cursor: pointer;
+}
+
+.data-table th[data-sortable]:hover {
+  background: #eef0f7;
+}
+
+/* Иконки сортировки */
+.sort-icon {
+  display: inline-block;
+  margin-left: 4px;
+  color: var(--color-text-light);
+  font-size: 11px;
+}
+
+.sort-icon.asc {
+  color: var(--color-primary);
+}
+
+.sort-icon.desc {
+  color: var(--color-primary);
+}
+
+/* Кнопка фильтра в заголовке */
+.filter-btn {
+  background: none;
+  border: none;
+  cursor: pointer;
+  color: var(--color-text-light);
+  font-size: 13px;
+  padding: 0 2px;
+  line-height: 1;
+  margin-left: 4px;
+  transition: color 0.15s;
+}
+
+.filter-btn:hover {
+  color: var(--color-primary);
+}
+
+.filter-btn.active {
+  color: var(--color-primary);
+}
+
+/* Ячейки */
+.data-table td {
+  padding: 10px 14px;
+  border-bottom: 1px solid var(--color-border);
+  vertical-align: middle;
+}
+
+.data-table tr:last-child td {
+  border-bottom: none;
+}
+
+.data-table tr:hover td {
+  background: var(--color-row-hover);
+}
+
+/* Цветовое выделение дохода */
+.income-positive {
+  color: var(--color-success);
+  font-weight: 600;
+}
+
+.income-negative {
+  color: var(--color-danger);
+  font-weight: 600;
+}
+
+/* Красный цвет capacity при превышении */
+.capacity-over {
+  color: var(--color-danger);
+  font-weight: 600;
+}
+
+/* Строка с итоговым доходом под таблицей */
+.total-income-row {
+  display: flex;
+  align-items: center;
+  justify-content: flex-end;
+  gap: 12px;
+  padding: 14px 20px;
+  background: var(--color-surface);
+  border: 1px solid var(--color-border);
+  border-top: none;
+  border-radius: 0 0 var(--border-radius-lg) var(--border-radius-lg);
+  font-weight: 600;
+  font-size: 15px;
+}
+
+/* Инлайн-редактирование (позиция и зарплата) */
+.editable-cell {
+  cursor: pointer;
+  padding: 3px 6px;
+  border-radius: 4px;
+  transition: background 0.15s;
+}
+
+.editable-cell:hover {
+  background: #eef0f7;
+}
+
+/* Инпут/селект прямо в ячейке */
+.inline-input, .inline-select {
+  width: 100%;
+  padding: 4px 8px;
+  border: 1px solid var(--color-primary);
+  border-radius: 4px;
+  font-size: 13px;
+  background: #fff;
+  outline: none;
+}
+
 /*# sourceMappingURL=style.css.map */
