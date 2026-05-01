@@ -460,4 +460,50 @@ body {
   outline: none;
 }
 
+/* ═══════════════════════════════════════════════════════
+   ЧИПЫ ФИЛЬТРОВ
+═══════════════════════════════════════════════════════ */
+.filter-chips {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 8px;
+  margin-bottom: 12px;
+  min-height: 0; /* Не занимает место если пусто */
+}
+
+.filter-chip {
+  display: inline-flex;
+  align-items: center;
+  gap: 6px;
+  padding: 4px 10px;
+  background: #e8eeff;
+  color: var(--color-primary);
+  border-radius: 999px;
+  font-size: 12px;
+  font-weight: 500;
+}
+
+/* Кнопка × на чипе */
+.chip-remove {
+  background: none;
+  border: none;
+  color: var(--color-primary);
+  cursor: pointer;
+  font-size: 14px;
+  line-height: 1;
+  padding: 0;
+  margin-left: 2px;
+}
+
+.chip-remove:hover {
+  color: var(--color-danger);
+}
+
+/* Чип "Clear Filters" */
+.filter-chip.clear-chip {
+  background: #ffeaea;
+  color: var(--color-danger);
+  cursor: pointer;
+}
+
 /*# sourceMappingURL=style.css.map */
