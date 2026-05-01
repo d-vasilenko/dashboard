@@ -794,4 +794,91 @@ input[type=range] {
   border-left: 3px solid var(--color-danger);
 }
 
+/* ═══════════════════════════════════════════════════════
+   ДЕТАЛЬНЫЕ ПОПАПЫ — таблицы в модальных окнах
+═══════════════════════════════════════════════════════ */
+/* Таблица внутри попапа */
+.popup-table {
+  width: 100%;
+  border-collapse: collapse;
+  font-size: 13px;
+}
+
+.popup-table th {
+  text-align: left;
+  padding: 8px 10px;
+  font-size: 11px;
+  font-weight: 600;
+  text-transform: uppercase;
+  letter-spacing: 0.4px;
+  color: var(--color-text-muted);
+  border-bottom: 2px solid var(--color-border);
+  white-space: nowrap;
+}
+
+.popup-table td {
+  padding: 9px 10px;
+  border-bottom: 1px solid var(--color-border);
+  vertical-align: middle;
+}
+
+.popup-table tr:last-child td {
+  border-bottom: none;
+}
+
+.popup-table tr:hover td {
+  background: var(--color-row-hover);
+}
+
+/* Пустое состояние */
+.empty-state {
+  text-align: center;
+  color: var(--color-text-muted);
+  padding: 32px 0;
+  font-size: 14px;
+}
+
+/* Кнопки действий в строке таблицы */
+.row-actions {
+  display: flex;
+  gap: 6px;
+  white-space: nowrap;
+}
+
+/* ═══════════════════════════════════════════════════════
+   ПОПАП ФИЛЬТРА
+═══════════════════════════════════════════════════════ */
+.filter-popup {
+  position: fixed;
+  background: var(--color-surface);
+  border: 1px solid var(--color-border);
+  border-radius: var(--border-radius);
+  box-shadow: var(--shadow-md);
+  z-index: 450;
+  padding: 12px;
+  width: 220px;
+  display: flex;
+  flex-direction: column;
+  gap: 10px;
+}
+
+.filter-input, .filter-select {
+  width: 100%;
+  padding: 7px 10px;
+  border: 1px solid var(--color-border);
+  border-radius: var(--border-radius);
+  font-size: 13px;
+  outline: none;
+}
+
+.filter-input:focus, .filter-select:focus {
+  border-color: var(--color-primary);
+}
+
+.filter-popup-buttons {
+  display: flex;
+  gap: 8px;
+  justify-content: flex-end;
+}
+
 /*# sourceMappingURL=style.css.map */

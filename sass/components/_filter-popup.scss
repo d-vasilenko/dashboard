@@ -1,0 +1,38 @@
+@use "../abstract/constants";
+
+/* ═══════════════════════════════════════════════════════
+   ПОПАП ФИЛЬТРА
+═══════════════════════════════════════════════════════ */
+
+.filter-popup {
+  position: fixed;
+  background: var(--color-surface);
+  border: 1px solid var(--color-border);
+  border-radius: var(--border-radius);
+  box-shadow: var(--shadow-md);
+  z-index: 450;
+  padding: 12px;
+  width: 220px;
+  display: flex;
+  flex-direction: column;
+  gap: 10px;
+}
+
+.filter-input, .filter-select {
+  width: 100%;
+  padding: 7px 10px;
+  border: 1px solid var(--color-border);
+  border-radius: var(--border-radius);
+  font-size: 13px;
+  outline: none;
+}
+
+.filter-input:focus, .filter-select:focus {
+  border-color: var(--color-primary);
+}
+
+.filter-popup-buttons {
+  display: flex;
+  gap: 8px;
+  justify-content: flex-end;
+}
