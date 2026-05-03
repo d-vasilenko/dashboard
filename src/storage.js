@@ -1,3 +1,5 @@
+import { generateId,  monthKey} from './constants.js';
+
 // ═══════════════════════════════════════════════════════
 // storage.js — Работа с localStorage
 //
@@ -45,7 +47,7 @@ const STORAGE_KEY = 'monthlyData';
  * Возвращает объект { "2026-0": { employees, projects }, ... }
  * Если данных нет — возвращает пустой объект.
  */
-function loadAllData() {
+export function loadAllData() {
   try {
     const raw = localStorage.getItem(STORAGE_KEY);
     return raw ? JSON.parse(raw) : {};
@@ -61,7 +63,7 @@ function loadAllData() {
  * Записывает весь объект monthlyData в localStorage.
  * Вызывается после каждого изменения данных.
  */
-function saveAllData(allData) {
+export function saveAllData(allData) {
   localStorage.setItem(STORAGE_KEY, JSON.stringify(allData));
 }
 
@@ -74,7 +76,7 @@ function saveAllData(allData) {
  * @param {number} year
  * @param {number} month — 0-11
  */
-function getMonthData(year, month) {
+export function getMonthData(year, month) {
   const all = loadAllData();
   const key = monthKey(year, month);
   // Если данных для этого месяца нет — возвращаем пустые массивы
@@ -87,7 +89,7 @@ function getMonthData(year, month) {
  * Сохраняет employees и projects для указанного месяца.
  * Не затрагивает данные других месяцев.
  */
-function saveMonthData(year, month, employees, projects) {
+export function saveMonthData(year, month, employees, projects) {
   const all = loadAllData();
   const key = monthKey(year, month);
   all[key] = { employees, projects };
@@ -105,7 +107,7 @@ function saveMonthData(year, month, employees, projects) {
  * @param {number} year      — целевой год
  * @param {number} month     — целевой месяц
  */
-function seedDataFromMonth(sourceKey, year, month) {
+export function seedDataFromMonth(sourceKey, year, month) {
   const all = loadAllData();
   const source = all[sourceKey];
   if (!source) return;
@@ -132,7 +134,7 @@ function seedDataFromMonth(sourceKey, year, month) {
  *
  * @param {string} excludeKey — ключ текущего месяца (не включаем его в список)
  */
-function getAvailableMonthKeys(excludeKey) {
+export function getAvailableMonthKeys(excludeKey) {
   const all = loadAllData();
   return Object.keys(all).filter(key => {
     if (key === excludeKey) return false;
@@ -148,7 +150,7 @@ function getAvailableMonthKeys(excludeKey) {
  * Создаёт тестовые данные для января 2026 (если localStorage пуст).
  * Позволяет сразу видеть как работает приложение.
  */
-function initSampleData() {
+export function initSampleData() {
   const all = loadAllData();
 
   // Проверяем: если уже есть хоть какие-то данные — ничего не делаем

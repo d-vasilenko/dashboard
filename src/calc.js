@@ -1,3 +1,5 @@
+import { BENCH_FACTOR } from './constants.js';
+
 // ═══════════════════════════════════════════════════════
 // calc.js — Все финансовые расчёты приложения
 //
@@ -41,7 +43,7 @@
  * @param {number} month — 0-11
  * @returns {Date[]}
  */
-function getDaysInMonth(year, month) {
+export function getDaysInMonth(year, month) {
   const days = [];
   // Получаем кол-во дней: day=0 следующего месяца = последний день текущего
   const count = new Date(year, month + 1, 0).getDate();
@@ -54,7 +56,7 @@ function getDaysInMonth(year, month) {
 /**
  * Проверяет, является ли дата выходным днём (суббота или воскресенье).
  */
-function isWeekend(date) {
+export function isWeekend(date) {
   const dow = date.getDay(); // 0 = воскресенье, 6 = суббота
   return dow === 0 || dow === 6;
 }
@@ -66,7 +68,7 @@ function isWeekend(date) {
  * @param {number} month — 0-11
  * @returns {number}
  */
-function countWorkingDaysInMonth(year, month) {
+export function countWorkingDaysInMonth(year, month) {
   return getDaysInMonth(year, month).filter(d => !isWeekend(d)).length;
 }
 
@@ -78,7 +80,7 @@ function countWorkingDaysInMonth(year, month) {
  * @param {number[]} vacationDays — массив чисел дней (1-31)
  * @returns {number}
  */
-function countVacationWorkingDays(year, month, vacationDays) {
+export function countVacationWorkingDays(year, month, vacationDays) {
   if (!vacationDays || vacationDays.length === 0) return 0;
   const vacSet = new Set(vacationDays);
   return getDaysInMonth(year, month).filter(d => {
@@ -95,7 +97,7 @@ function countVacationWorkingDays(year, month, vacationDays) {
  * @param {number[]} vacationDays
  * @returns {number} — значение от 0 до 1
  */
-function calcVacationCoeff(year, month, vacationDays) {
+export function calcVacationCoeff(year, month, vacationDays) {
   const totalWorking   = countWorkingDaysInMonth(year, month);
   if (totalWorking === 0) return 1; // на всякий случай (если в месяце одни выходные)
 
@@ -113,7 +115,7 @@ function calcVacationCoeff(year, month, vacationDays) {
  *
  * effectiveCapacity = assignedCapacity × fit × vacationCoeff
  */
-function calcEffectiveCapacity(assignedCapacity, fit, vacationCoeff) {
+export function calcEffectiveCapacity(assignedCapacity, fit, vacationCoeff) {
   return assignedCapacity * fit * vacationCoeff;
 }
 
@@ -121,7 +123,7 @@ function calcEffectiveCapacity(assignedCapacity, fit, vacationCoeff) {
  * Вычисляет стоимость сотрудника для нанимателя (employer cost).
  * Минимум — 0.5 × salary (даже если capacity < 0.5).
  */
-function calcEmployeeCost(salary, assignedCapacity) {
+export function calcEmployeeCost(salary, assignedCapacity) {
   return salary * Math.max(BENCH_FACTOR, assignedCapacity);
 }
 
@@ -147,7 +149,7 @@ function calcEmployeeCost(salary, assignedCapacity) {
  *   isOverCapacity       — используется capacity > проектной
  * }
  */
-function calcProjectFinancials(project, employees, year, month) {
+export function calcProjectFinancials(project, employees, year, month) {
   // Находим всех сотрудников, назначенных на этот проект
   const assignedEmployees = [];
 
@@ -221,7 +223,7 @@ function calcProjectFinancials(project, employees, year, month) {
  *   assignmentDetails  — детали по каждому проекту
  * }
  */
-function calcEmployeeFinancials(employee, projects, year, month) {
+export function calcEmployeeFinancials(employee, projects, year, month) {
   const vacationCoeff = calcVacationCoeff(year, month, employee.vacationDays);
 
   // Если нет назначений — сотрудник на "скамейке"
@@ -293,7 +295,7 @@ function calcEmployeeFinancials(employee, projects, year, month) {
  *   totalEstimatedIncome  — итог под таблицей проектов
  * }
  */
-function calcAllFinancials(employees, projects, year, month) {
+export function calcAllFinancials(employees, projects, year, month) {
   // ── 1. Считаем финансы каждого проекта ──────────────
   const projectsData = new Map();
 
@@ -397,7 +399,7 @@ function calcAllFinancials(employees, projects, year, month) {
  * Считает суммарную назначенную capacity сотрудника.
  * Используется чтобы проверить: можно ли ещё назначить?
  */
-function calcTotalAssignedCapacity(employee) {
+export function calcTotalAssignedCapacity(employee) {
   if (!employee.assignments || employee.assignments.length === 0) return 0;
   return employee.assignments.reduce((sum, a) => sum + a.capacity, 0);
 }
@@ -407,7 +409,7 @@ function calcTotalAssignedCapacity(employee) {
  * ПОСЛЕ снятия назначения сотрудника.
  * Возвращает { projectIncome } для попапа подтверждения.
  */
-function calcProjectIncomeWithout(project, employees, excludeEmpId, year, month) {
+export function calcProjectIncomeWithout(project, employees, excludeEmpId, year, month) {
   // Временно убираем назначение этого сотрудника
   const modifiedEmployees = employees.map(emp => {
     if (emp.id !== excludeEmpId) return emp;

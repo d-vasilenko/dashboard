@@ -1,3 +1,13 @@
+import { MONTH_NAMES } from './constants.js';
+import { getMonthData, saveMonthData } from './storage.js';
+import { currentYear, currentMonth } from './state.js';
+import { openModal, closeModal } from './ui.js';
+import { isWeekend, countWorkingDaysInMonth, countVacationWorkingDays } from './calc.js';
+export { openCalendar };
+function renderCurrentTab() {
+  document.dispatchEvent(new CustomEvent('app:renderCurrentTab'));
+}
+
 // ═══════════════════════════════════════════════════════
 // calendar.js — Календарь отпусков
 //
@@ -246,6 +256,6 @@ function formatVacationRanges(days, year, month) {
  * Навешивает обработчик на кнопку "Set Vacation".
  * Вызывается один раз при старте приложения.
  */
-function initCalendar() {
+export function initCalendar() {
   document.getElementById('setVacationBtn').addEventListener('click', saveVacation);
 }

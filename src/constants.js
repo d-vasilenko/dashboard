@@ -7,10 +7,10 @@
 // ═══════════════════════════════════════════════════════
 
 // ─── Должности сотрудников ───────────────────────────
-const POSITIONS = ['Junior', 'Middle', 'Senior', 'Lead', 'Architect', 'BO'];
+export const POSITIONS = ['Junior', 'Middle', 'Senior', 'Lead', 'Architect', 'BO'];
 
 // ─── Названия месяцев (индекс = значение Date.getMonth()) ───
-const MONTH_NAMES = [
+export const MONTH_NAMES = [
   'January','February','March','April','May','June',
   'July','August','September','October','November','December'
 ];
@@ -18,10 +18,10 @@ const MONTH_NAMES = [
 // ─── Минимальная доля зарплаты на «скамейке запасных» ───
 // Если сотрудник не назначен ни на один проект, он получает 50% зарплаты.
 // Если назначен с capacity < 0.5, мы всё равно платим 0.5 × salary.
-const BENCH_FACTOR = 0.5;
+export const BENCH_FACTOR = 0.5;
 
 // ─── Максимальная нагрузка одного сотрудника ─────────
-const MAX_CAPACITY = 1.5;
+export const MAX_CAPACITY = 1.5;
 
 // ════════════════════════════════════════════════════════
 // УТИЛИТЫ — чистые функции без побочных эффектов
@@ -31,7 +31,7 @@ const MAX_CAPACITY = 1.5;
  * Генерирует простой уникальный ID на основе времени + случайности.
  * Не UUID, но достаточно для localStorage.
  */
-function generateId() {
+export function generateId() {
   return Date.now().toString(36) + Math.random().toString(36).slice(2, 7);
 }
 
@@ -39,7 +39,7 @@ function generateId() {
  * Форматирует число как валюту с 2 знаками после запятой.
  * Пример: 1234.5 → "$1,234.50"
  */
-function formatCurrency(value) {
+export function formatCurrency(value) {
   return '$' + Number(value).toLocaleString('en-US', {
     minimumFractionDigits: 2,
     maximumFractionDigits: 2
@@ -50,7 +50,7 @@ function formatCurrency(value) {
  * Форматирует число с фиксированным количеством знаков.
  * Пример: formatFixed(1.6667, 2) → "1.67"
  */
-function formatFixed(value, decimals = 2) {
+export function formatFixed(value, decimals = 2) {
   return Number(value).toFixed(decimals);
 }
 
@@ -58,7 +58,7 @@ function formatFixed(value, decimals = 2) {
  * Вычисляет возраст из даты рождения (строка "YYYY-MM-DD").
  * Учитывает, был ли уже день рождения в этом году.
  */
-function calcAge(dob) {
+export function calcAge(dob) {
   if (!dob) return 0;
   const today = new Date();
   const birth = new Date(dob);
@@ -78,7 +78,7 @@ function calcAge(dob) {
  * @param {number} year  — полный год (2025, 2026, 2027)
  * @param {number} month — индекс месяца (0 = январь, 11 = декабрь)
  */
-function monthKey(year, month) {
+export function monthKey(year, month) {
   return `${year}-${month}`;
 }
 
@@ -88,7 +88,7 @@ function monthKey(year, month) {
  * @param {HTMLElement} popup    — элемент попапа
  * @param {HTMLElement} button   — кнопка-якорь
  */
-function positionPopupNearButton(popup, button) {
+export function positionPopupNearButton(popup, button) {
   // Сначала делаем попап видимым, чтобы получить его размеры
   popup.style.visibility = 'hidden';
   popup.classList.remove('hidden');
@@ -128,7 +128,7 @@ function positionPopupNearButton(popup, button) {
  * @param {HTMLElement} th        — элемент заголовка <th>
  * @param {'asc'|'desc'|null} dir — направление или null (сброс)
  */
-function updateSortIcon(th, dir) {
+export function updateSortIcon(th, dir) {
   const icon = th.querySelector('.sort-icon');
   if (!icon) return;
   icon.textContent = dir === 'asc' ? '↑' : dir === 'desc' ? '↓' : '⇅';
@@ -139,7 +139,7 @@ function updateSortIcon(th, dir) {
  * Добавляет CSS-класс к числовому значению в зависимости от знака.
  * Возвращает строку с <span class="income-positive/negative">
  */
-function coloredAmount(value) {
+export function coloredAmount(value) {
   const cls = value >= 0 ? 'income-positive' : 'income-negative';
   return `<span class="${cls}">${formatCurrency(value)}</span>`;
 }
@@ -147,7 +147,7 @@ function coloredAmount(value) {
 /**
  * Экранирует HTML-символы, чтобы избежать XSS при вставке пользовательского текста.
  */
-function escapeHtml(str) {
+export function escapeHtml(str) {
   return String(str)
     .replace(/&/g, '&amp;')
     .replace(/</g, '&lt;')
