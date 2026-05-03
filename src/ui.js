@@ -1,3 +1,9 @@
+import { MONTH_NAMES, MAX_CAPACITY, formatCurrency, calcAge, monthKey, positionPopupNearButton, coloredAmount, escapeHtml } from './constants.js';
+import { getMonthData, saveMonthData, getAvailableMonthKeys, seedDataFromMonth } from './storage.js';
+import { currentYear, currentMonth } from './state.js';
+import { calcProjectFinancials, calcEmployeeFinancials, calcAllFinancials, calcProjectIncomeWithout, calcTotalAssignedCapacity, calcVacationCoeff, calcEffectiveCapacity } from './calc.js';
+import { applyProjectFilters, applyEmployeeFilters, applyProjectSort, applyEmployeeSort, renderFilterChips, setFilter } from './filter.js';
+
 // ═══════════════════════════════════════════════════════
 // ui.js — Отрисовка таблиц и всех попапов
 //
@@ -25,7 +31,7 @@
  * Открывает модальное окно и показывает backdrop.
  * @param {string} modalId — ID элемента модалки
  */
-function openModal(modalId) {
+export function openModal(modalId) {
   document.getElementById(modalId).classList.remove('hidden');
   document.getElementById('modalBackdrop').classList.remove('hidden');
 }
@@ -34,7 +40,7 @@ function openModal(modalId) {
  * Закрывает модальное окно.
  * Backdrop скрывается только если нет других открытых модалок.
  */
-function closeModal(modalId) {
+export function closeModal(modalId) {
   document.getElementById(modalId).classList.add('hidden');
 
   // Проверяем: есть ли ещё открытые модалки?
@@ -85,7 +91,7 @@ function closePanel(panelId) {
  * Перерисовывает таблицу проектов с учётом фильтров и сортировки.
  * Также обновляет строку Total Estimated Income.
  */
-function renderProjectsTable() {
+export function renderProjectsTable() {
   const { employees, projects } = getMonthData(currentYear, currentMonth);
 
   // Считаем все финансы за раз
@@ -194,7 +200,7 @@ function attachProjectRowHandlers() {
 /**
  * Перерисовывает таблицу сотрудников.
  */
-function renderEmployeesTable() {
+export function renderEmployeesTable() {
   const { employees, projects } = getMonthData(currentYear, currentMonth);
 
   const { employeesData } = calcAllFinancials(employees, projects, currentYear, currentMonth);
@@ -287,14 +293,14 @@ function attachEmployeeRowHandlers(allEmployees) {
   // Inline-редактирование позиции
   document.querySelectorAll('.position-cell').forEach(cell => {
     cell.addEventListener('click', () => {
-      activatePositionEdit(cell, cell.dataset.empId, cell.dataset.current);
+      document.dispatchEvent(new CustomEvent('app:activatePositionEdit', { detail: { cell, empId: cell.dataset.empId, current: cell.dataset.current } }));
     });
   });
 
   // Inline-редактирование зарплаты
   document.querySelectorAll('.salary-cell').forEach(cell => {
     cell.addEventListener('click', () => {
-      activateSalaryEdit(cell, cell.dataset.empId, parseFloat(cell.dataset.current));
+      document.dispatchEvent(new CustomEvent('app:activateSalaryEdit', { detail: { cell, empId: cell.dataset.empId, current: parseFloat(cell.dataset.current) } }));
     });
   });
 
@@ -308,7 +314,7 @@ function attachEmployeeRowHandlers(allEmployees) {
   // Availability (календарь)
   document.querySelectorAll('.availability-btn').forEach(btn => {
     btn.addEventListener('click', () => {
-      openCalendar(btn.dataset.empId);
+      document.dispatchEvent(new CustomEvent('app:openCalendar', { detail: { empId: btn.dataset.empId } }));
     });
   });
 
@@ -1195,7 +1201,7 @@ let currentTab = 'projects'; // 'projects' | 'employees'
  * Переключает активную вкладку и перерисовывает контент.
  * @param {string} tab — 'projects' | 'employees'
  */
-function switchTab(tab) {
+export function switchTab(tab) {
   currentTab = tab;
 
   // Обновляем активный стиль табов в сайдбаре
@@ -1212,7 +1218,7 @@ function switchTab(tab) {
  * Перерисовывает активную вкладку.
  * Вызывается после любого изменения данных.
  */
-function renderCurrentTab() {
+export function renderCurrentTab() {
   if (currentTab === 'projects') {
     renderProjectsTable();
   } else {
@@ -1228,7 +1234,7 @@ function renderCurrentTab() {
 /**
  * Навешивает все "статичные" обработчики (один раз при старте).
  */
-function initUIHandlers() {
+export function initUIHandlers() {
 
   // ── Закрытие модалок по кнопкам [data-close-modal] ───
   document.addEventListener('click', e => {
@@ -1271,12 +1277,12 @@ function initUIHandlers() {
 
   // ── Кнопки открытия панелей ───────────────────────────
   document.getElementById('addProjectBtn').addEventListener('click', () => {
-    resetProjectForm();
+    document.dispatchEvent(new CustomEvent('app:resetProjectForm'));
     openPanel('addProjectPanel');
   });
 
   document.getElementById('addEmployeeBtn').addEventListener('click', () => {
-    resetEmployeeForm();
+    document.dispatchEvent(new CustomEvent('app:resetEmployeeForm'));
     openPanel('addEmployeePanel');
   });
 

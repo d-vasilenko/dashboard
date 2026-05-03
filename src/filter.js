@@ -1,3 +1,11 @@
+import { calcAge, positionPopupNearButton, updateSortIcon, escapeHtml } from './constants.js';
+import { getMonthData } from './storage.js';
+import { currentYear, currentMonth } from './state.js';
+// renderCurrentTab вызывается через событие, чтобы избежать циклической зависимости
+function renderCurrentTab() {
+  document.dispatchEvent(new CustomEvent('app:renderCurrentTab'));
+}
+
 // ═══════════════════════════════════════════════════════
 // filters.js — Фильтрация и сортировка таблиц
 //
@@ -32,7 +40,7 @@ let currentFilterTarget = null; // { tableKey, colName, isDropdown }
  * Применяет активные фильтры к массиву строк проектов.
  * Возвращает отфильтрованный массив.
  */
-function applyProjectFilters(projects) {
+export function applyProjectFilters(projects) {
   const filters = activeFilters.projects;
   return projects.filter(p => {
     for (const [col, value] of Object.entries(filters)) {
@@ -48,7 +56,7 @@ function applyProjectFilters(projects) {
 /**
  * Применяет активные фильтры к массиву сотрудников.
  */
-function applyEmployeeFilters(employees) {
+export function applyEmployeeFilters(employees) {
   const filters = activeFilters.employees;
   return employees.filter(emp => {
     for (const [col, value] of Object.entries(filters)) {
@@ -75,7 +83,7 @@ function applyEmployeeFilters(employees) {
  * @param {object[]} projects
  * @param {Map}      projectsData — результаты calcAllFinancials
  */
-function applyProjectSort(projects, projectsData) {
+export function applyProjectSort(projects, projectsData) {
   const { col, dir } = sortState.projects;
   if (!col || !dir) return [...projects];
 
@@ -119,7 +127,7 @@ function applyProjectSort(projects, projectsData) {
 /**
  * Сортирует массив сотрудников по текущему sortState.employees.
  */
-function applyEmployeeSort(employees, employeesData) {
+export function applyEmployeeSort(employees, employeesData) {
   const { col, dir } = sortState.employees;
   if (!col || !dir) return [...employees];
 
@@ -294,7 +302,7 @@ function clearAllFilters(tableKey) {
 /**
  * Добавляет или обновляет фильтр программно (например, из "See at..." навигации).
  */
-function setFilter(tableKey, colName, value) {
+export function setFilter(tableKey, colName, value) {
   if (value) {
     activeFilters[tableKey][colName] = value;
   } else {
@@ -313,7 +321,7 @@ function setFilter(tableKey, colName, value) {
  *
  * @param {string} tableKey — 'projects' | 'employees'
  */
-function renderFilterChips(tableKey) {
+export function renderFilterChips(tableKey) {
   const containerId = tableKey === 'projects' ? 'projectFilterChips' : 'employeeFilterChips';
   const container   = document.getElementById(containerId);
   const filters     = activeFilters[tableKey];
@@ -356,7 +364,7 @@ function renderFilterChips(tableKey) {
  * Навешивает обработчики на все th с data-sortable и data-filterable.
  * Вызывается один раз при инициализации приложения.
  */
-function initTableHeaders() {
+export function initTableHeaders() {
   // Проходим по обеим таблицам
   [
     { tableId: 'projectsTable',  tableKey: 'projects'  },

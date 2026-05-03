@@ -1,3 +1,10 @@
+import { POSITIONS, generateId, calcAge } from './constants.js';
+import { getMonthData, saveMonthData } from './storage.js';
+import { currentYear, currentMonth } from './state.js';
+function renderCurrentTab() {
+  document.dispatchEvent(new CustomEvent('app:renderCurrentTab'));
+}
+
 // ═══════════════════════════════════════════════════════
 // forms.js — Валидация и обработка форм
 //
@@ -126,7 +133,7 @@ function validateForm(fieldIds, submitId) {
 // ИНИЦИАЛИЗАЦИЯ ФОРМЫ ПРОЕКТА
 // ════════════════════════════════════════════════════════
 
-function initProjectForm() {
+export function initProjectForm() {
   const fieldIds  = ['proj_projectName', 'proj_companyName', 'proj_budget', 'proj_capacity'];
   const submitId  = 'addProjectSubmit';
   const form      = document.getElementById('addProjectForm');
@@ -192,7 +199,7 @@ function initProjectForm() {
 /**
  * Сбрасывает форму проекта в исходное состояние.
  */
-function resetProjectForm() {
+export function resetProjectForm() {
   ['proj_projectName', 'proj_companyName', 'proj_budget', 'proj_capacity'].forEach(id => {
     const el = document.getElementById(id);
     if (el) { el.value = ''; el.classList.remove('invalid'); }
@@ -207,7 +214,7 @@ function resetProjectForm() {
 // ИНИЦИАЛИЗАЦИЯ ФОРМЫ СОТРУДНИКА
 // ════════════════════════════════════════════════════════
 
-function initEmployeeForm() {
+export function initEmployeeForm() {
   const fieldIds = ['emp_name', 'emp_surname', 'emp_dob', 'emp_position', 'emp_salary'];
   const submitId = 'addEmployeeSubmit';
   const form     = document.getElementById('addEmployeeForm');
@@ -270,7 +277,7 @@ function initEmployeeForm() {
   });
 }
 
-function resetEmployeeForm() {
+export function resetEmployeeForm() {
   ['emp_name', 'emp_surname', 'emp_dob', 'emp_position', 'emp_salary'].forEach(id => {
     const el = document.getElementById(id);
     if (el) { el.value = el.tagName === 'SELECT' ? '' : ''; el.classList.remove('invalid'); }
@@ -293,7 +300,7 @@ function resetEmployeeForm() {
  * @param {string}      employeeId
  * @param {string}      currentPos — текущая позиция
  */
-function activatePositionEdit(cell, employeeId, currentPos) {
+export function activatePositionEdit(cell, employeeId, currentPos) {
   // Уже редактируется?
   if (cell.querySelector('select')) return;
 
@@ -331,7 +338,7 @@ function activatePositionEdit(cell, employeeId, currentPos) {
  * @param {string}      employeeId
  * @param {number}      currentSalary
  */
-function activateSalaryEdit(cell, employeeId, currentSalary) {
+export function activateSalaryEdit(cell, employeeId, currentSalary) {
   if (cell.querySelector('input')) return;
 
   const input = document.createElement('input');
